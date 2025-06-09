@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -11,11 +12,27 @@ public class GameManager : MonoBehaviour
     //플레이어
     private GameObject Player;
 
+    private int playerLevel;
+
+    private int PlayerEx;
+
     //카메라
     private GameObject Cam;
 
+    //UI
+    private GameObject ui;
+
+    //현제 레벨 
+    public int nowLeval;
+
+    //기타 세팅
+    bool GameStopKeyDown = false;
+
+
+
     //플레이 타임
-    float playTime = 0;
+    //[HideInInspector]
+    //public float playTime = 0;
 
 
     private void Awake()
@@ -39,6 +56,54 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        FindObj();
+
+        ui.GetComponent<UIManager>().setWaveText(nowLeval);
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //FindObj();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameStopKeyDown = !GameStopKeyDown;
+            if (GameStopKeyDown)
+                GameStop();
+            else
+                GameReStart();
+        }
+        
+        
+    }
+
+    public void GameStop()
+    {
+        Time.timeScale = 0;
+    }
+    public void GameReStart()
+    {
+        Time.timeScale = 1;
+    }
+
+    public void getLevel(int GetLevel)
+    {
+        playerLevel += GetLevel;
+
+    }
+
+    public void StartGame()
+    {
+        nowLeval = 0;
+        playerLevel = 0;
+
+
+    }
+
+    private void FindObj()
+    {
         if (Player == null)
         {
             Player = GameObject.Find("Player"); // 씬 로드 시 다시 Player 찾기
@@ -47,6 +112,11 @@ public class GameManager : MonoBehaviour
         if (Cam == null)
         {
             Cam = GameObject.Find("Main Camera");
+        }
+
+        if(ui == null)
+        {
+            ui = GameObject.Find("UI_Canvas");
         }
 
         {//다시 확인
@@ -63,18 +133,22 @@ public class GameManager : MonoBehaviour
                 return;
             }
 
+            if (Cam == null)
+            {
+                Debug.LogWarning("UI 오브젝트를 찾을 수 없습니다.");
+                return;
+            }
         }
-
-
     }
 
-    // Update is called once per frame
-    void Update()
+    public void GetEx(int ex)
     {
-        playTime += Time.deltaTime;
-
-
-
-
+        PlayerEx += ex;
+        if (PlayerEx >= 100)
+        {
+            PlayerEx -= 100;
+            playerLevel ++;
+        }
+        ui.GetComponent<UIManager>().UIGetEx(PlayerEx);
     }
 }
