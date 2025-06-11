@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
+using Unity.VisualScripting;
 
 public class UIManager : MonoBehaviour
 {
@@ -16,14 +17,23 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Slider EX_Slider;
 
+    public GameObject[] statUiAll;
 
+    public StatCardData[] statCardDatas;
+
+    public GameObject stopPanel;
+    public GameObject pauseMenu;
+    bool stop =false;
 
     private float gamePlayTime = 0;
+
 
 
     void Start()
     {
         EX_Slider.value = 0;
+
+        //SettingStateCard();
     }
 
     // Update is called once per frame
@@ -50,5 +60,77 @@ public class UIManager : MonoBehaviour
     public void setWaveText(int wave)
     {
         WaveText.text = "Wave " + wave.ToString();
+    }
+
+    public void SettingStateCard()
+    {
+
+        //for(int count= 0; count < statUiAll.Length; count++)
+        //{
+        //    int randNum = Random.Range(0, statCardDatas.Length);
+
+        //    for(int tm = 0; tm < temporarySave.Length; tm++)
+        //    {
+        //        if (temporarySave[tm] == randNum)
+        //        {
+        //            saveCard = false ;
+        //            count--;
+        //            break;
+        //        }
+
+        //        if(tm == temporarySave.Length-1)
+        //        {
+        //            saveCard = true ;
+        //            temporarySave[tm] = randNum;
+        //        }
+        //    }
+
+        //    if (true)
+        //    {
+        //        statUiAll[count].GetComponent<StatCardUI>().SetingStatUi
+        //            (statCardDatas[randNum].name , statCardDatas[randNum].StatExplanation 
+        //            , statCardDatas[randNum].StatCardImg);
+
+        //        saveCard = false ;
+        //    }
+            
+        //}
+
+        List<int> usedIndices = new List<int>();
+
+        for (int count = 0; count < statUiAll.Length; count++)
+        {
+            int randNum;
+
+            // 중복되지 않는 랜덤 번호를 뽑을 때까지 반복
+            do
+            {
+                randNum = Random.Range(0, statCardDatas.Length);
+            }
+            while (usedIndices.Contains(randNum));
+
+            usedIndices.Add(randNum); // 중복 방지용 저장
+
+            statUiAll[count].GetComponent<StatCardUI>().SetingStatUi(
+                statCardDatas[randNum].name,
+                statCardDatas[randNum].StatExplanation,
+                statCardDatas[randNum].StatCardImg
+            );
+        }
+    }
+
+    public void escStopGame(bool stop)
+    {
+
+        if (stop)
+        {
+            stopPanel.SetActive(true);
+            pauseMenu.SetActive(true);
+        }
+        else
+        {
+            pauseMenu.SetActive(false);
+            stopPanel.SetActive(false);
+        }
     }
 }

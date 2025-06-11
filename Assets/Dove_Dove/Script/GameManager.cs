@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject); // 씬 전환 후에도 GameManager 유지
+            
         }
         else
         {
@@ -71,7 +72,9 @@ public class GameManager : MonoBehaviour
         {
             GameStopKeyDown = !GameStopKeyDown;
             if (GameStopKeyDown)
+            {
                 GameStop();
+            }
             else
                 GameReStart();
         }
@@ -82,10 +85,12 @@ public class GameManager : MonoBehaviour
     public void GameStop()
     {
         Time.timeScale = 0;
+        ui.GetComponent<UIManager>().escStopGame(true);
     }
     public void GameReStart()
     {
         Time.timeScale = 1;
+        ui.GetComponent<UIManager>().escStopGame(false);
     }
 
     public void getLevel(int GetLevel)
@@ -151,4 +156,5 @@ public class GameManager : MonoBehaviour
         }
         ui.GetComponent<UIManager>().UIGetEx(PlayerEx);
     }
+
 }
