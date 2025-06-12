@@ -116,6 +116,7 @@ public class UIManager : MonoBehaviour
                 statCardDatas[randNum].StatExplanation,
                 statCardDatas[randNum].StatCardImg
             );
+            statUiAll[count].SetActive(true);
         }
     }
 
@@ -132,5 +133,22 @@ public class UIManager : MonoBehaviour
             pauseMenu.SetActive(false);
             stopPanel.SetActive(false);
         }
+    }
+
+    public void openStateCard()
+    {
+        stopPanel.SetActive(true);
+        
+        SettingStateCard();
+
+    }
+
+    public void closeStateCard()
+    {
+        for (int count = 0; count < statUiAll.Length; count++)
+        {
+            statUiAll[count].SetActive(false);
+        }
+        stopPanel.SetActive(false);
     }
 }

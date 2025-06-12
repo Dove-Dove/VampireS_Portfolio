@@ -12,12 +12,14 @@ public class StatCardUI : MonoBehaviour
 
     public Image UiImg;
 
+    public Button cardButton;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
+        cardButton.onClick.AddListener(clickEvent);
     }
 
     // Update is called once per frame
@@ -32,5 +34,15 @@ public class StatCardUI : MonoBehaviour
         statText.text = setStatText;
         UiImg.sprite = setStatImg;
 
+    }
+
+    void clickEvent()
+    {
+        //여기에 넣을꺼나 전달할거 추가
+
+        //닫기
+        GameObject ui;
+        ui = GameObject.Find("UI_Canvas");
+        ui.GetComponent<UIManager>().closeStateCard();
     }
 }
