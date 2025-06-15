@@ -8,7 +8,7 @@ public interface ISkill
     void Activate();
     void TryActivate();
     void LevelUp();
-    float GetColldown();
+    float GetCooldown();
     string GetName();
 
 }

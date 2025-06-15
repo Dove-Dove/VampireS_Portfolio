@@ -10,9 +10,9 @@ public class Enemy : MonoBehaviour, IDamageable
         currentHealth = maxHealth;
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(float amount)
     {
-        currentHealth -= amount;
+        currentHealth -= (int)amount;
 
         if (currentHealth <= 0)
         {

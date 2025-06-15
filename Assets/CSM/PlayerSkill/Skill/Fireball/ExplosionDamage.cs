@@ -18,7 +18,7 @@ public class ExplosionDamage : MonoBehaviour
         // 플레이어 스탯 가져오기
         PlayerStatus status = GameObject.FindWithTag("Player")?.GetComponent<PlayerStatus>();
         float size = status?.ProjectileSize ?? 1f;
-
+        audioSource = GetComponent<AudioSource>();
         // 이펙트 전체 스케일 확대
         transform.localScale *= size;
 
@@ -30,7 +30,8 @@ public class ExplosionDamage : MonoBehaviour
             main.startSizeMultiplier *= size;
             lifeTime = main.duration;
         }
-
+        if (audioSource != null)
+            audioSource.PlayOneShot(explosionClip); 
         // Collider 반경 확대
         CircleCollider2D col = GetComponent<CircleCollider2D>();
         if (col != null)
@@ -38,6 +39,7 @@ public class ExplosionDamage : MonoBehaviour
 
         DealExplosionDamage();
         Destroy(gameObject, lifeTime);
+        Debug.Log($"Explosion Scale: {transform.localScale}");
     }
 
 

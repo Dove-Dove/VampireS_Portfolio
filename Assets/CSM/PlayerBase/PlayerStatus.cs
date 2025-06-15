@@ -19,6 +19,7 @@ public class PlayerStatus : MonoBehaviour
     [Header("전투 보조")]
     [SerializeField] private float cooldownReduction = 0f;
     [SerializeField] private float pickupRange = 1f;
+    [SerializeField] private float targetRange = 20f;
 
     // 이벤트 정의
     public event Action OnDeath;
@@ -35,7 +36,7 @@ public class PlayerStatus : MonoBehaviour
 
     public float CooldownReduction => cooldownReduction;
     public float PickupRange => pickupRange;
-
+    public float TargetRange => targetRange;
     private void Awake()
     {
         currentHealth = maxHealth;
