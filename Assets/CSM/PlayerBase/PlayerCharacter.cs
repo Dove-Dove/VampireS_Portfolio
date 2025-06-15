@@ -1,35 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCharacter : MonoBehaviour
 {
-    private PlayerHealth health;
-    private PlayerMovement movement;
+    private PlayerStatus status;
 
     private void Awake()
     {
-        movement = GetComponent<PlayerMovement>();
-        health = GetComponent<PlayerHealth>();
-
+        status = GetComponent<PlayerStatus>();
     }
 
     private void OnEnable()
     {
-        if (health == null)
-            health = GetComponent<PlayerHealth>();
-
-        health.onDeath += HandleDeath;
+        if (status != null)
+            status.OnDeath += HandleDeath;
     }
 
     private void OnDisable()
     {
-        if (health != null)
-            health.onDeath -= HandleDeath;
+        if (status != null)
+            status.OnDeath -= HandleDeath;
     }
 
     private void HandleDeath()
     {
-        Debug.Log("플레이어 죽음");
+        Debug.Log("플레이어 사망 처리 로직 실행됨");
+        // TODO: 게임 오버 UI 띄우기, 리스폰, 이펙트 등
     }
 }

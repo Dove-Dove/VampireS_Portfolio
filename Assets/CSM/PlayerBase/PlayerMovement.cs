@@ -1,25 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D), typeof(PlayerStatus))]
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float speed = 5f;
-
-    private Rigidbody2D rigidbody2D;
+    private Rigidbody2D rb;
+    private PlayerStatus status;
     private Vector2 moveInput;
 
     private void Awake()
     {
-        rigidbody2D = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
+        status = GetComponent<PlayerStatus>();
     }
 
     private void Update()
     {
-        moveInput = new Vector2(Input.GetAxis("Horizontal"),Input.GetAxis("Vertical")).normalized;
+        moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
     }
+
     private void FixedUpdate()
     {
-        rigidbody2D.velocity = moveInput * speed;
+        float moveSpeed = status != null ? status.MoveSpeed : 5f;
+        rb.velocity = moveInput * moveSpeed;
     }
 }

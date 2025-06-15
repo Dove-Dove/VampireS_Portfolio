@@ -9,7 +9,16 @@ public abstract class BaseSkill : MonoBehaviour, ISkill
     protected float coldown = 1;
     private float lastUseTime = -999f;
 
-
+    protected PlayerStatus Status
+    {
+        get
+        {
+            if (_status == null && owner != null)
+                _status = owner.GetComponent<PlayerStatus>();
+            return _status;
+        }
+    }
+    private PlayerStatus _status;
 
     public abstract void Activate();
     public abstract string GetName();
