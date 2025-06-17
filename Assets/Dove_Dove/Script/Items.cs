@@ -17,6 +17,8 @@ public class Items : MonoBehaviour
 
     public ItemType item;
 
+    public int ex;
+
     Vector3 movePos;
     bool moveingItem = false;
 
@@ -61,7 +63,7 @@ public class Items : MonoBehaviour
         {
             if(item == ItemType.Exp)
             {
-                GameManager.Instance.GetEx(10);
+                GameManager.Instance.GetEx(ex);
             }
             else if(item == ItemType.hp)
             {
@@ -69,5 +71,13 @@ public class Items : MonoBehaviour
             }
             Destroy(this.gameObject);
         }
+    }
+
+    //일반 아이템일 경우 
+    public void GetItemData()
+    {
+
+        GetComponent<SpriteRenderer>().sprite = GameManager.Instance.RanItemData().ItemImg;
+
     }
 }

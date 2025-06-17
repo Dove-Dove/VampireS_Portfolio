@@ -28,6 +28,11 @@ public class GameManager : MonoBehaviour
     //기타 세팅
     bool GameStopKeyDown = false;
 
+    //데이터 등록
+
+    public StatCardData[] statCardDatas;
+    public ItemData[] itemDete;
+
 
 
     //플레이 타임
@@ -153,8 +158,29 @@ public class GameManager : MonoBehaviour
         {
             PlayerEx -= 100;
             playerLevel ++;
+            ui.GetComponent<UIManager>().openStateCard();
+           
         }
         ui.GetComponent<UIManager>().UIGetEx(PlayerEx);
     }
 
+
+
+    public ItemData RanItemData()
+    {
+        ItemData data;
+        int randomNum = Random.Range(0, itemDete.Length);
+        data = itemDete[randomNum];
+
+        return data;
+
+    }
+
+    public StatCardData RanStatCardDate(int getNum)
+    {
+        StatCardData statCard;
+        statCard = statCardDatas[getNum];
+        return statCard;
+
+    }
 }

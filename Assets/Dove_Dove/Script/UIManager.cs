@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
-using Unity.VisualScripting;
 
 public class UIManager : MonoBehaviour
 {
@@ -19,11 +18,13 @@ public class UIManager : MonoBehaviour
 
     public GameObject[] statUiAll;
 
-    public StatCardData[] statCardDatas;
-
     public GameObject stopPanel;
     public GameObject pauseMenu;
+
+    public GameObject GKeyUi;
     bool stop =false;
+
+    public int DataCount = 0;
 
     private float gamePlayTime = 0;
 
@@ -32,8 +33,6 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         EX_Slider.value = 0;
-
-        //SettingStateCard();
     }
 
     // Update is called once per frame
@@ -105,16 +104,17 @@ public class UIManager : MonoBehaviour
             // 중복되지 않는 랜덤 번호를 뽑을 때까지 반복
             do
             {
-                randNum = Random.Range(0, statCardDatas.Length);
+                randNum = Random.Range(0, DataCount);
             }
             while (usedIndices.Contains(randNum));
 
             usedIndices.Add(randNum); // 중복 방지용 저장
+            StatCardData stat = GameManager.Instance.RanStatCardDate(randNum);
 
             statUiAll[count].GetComponent<StatCardUI>().SetingStatUi(
-                statCardDatas[randNum].name,
-                statCardDatas[randNum].StatExplanation,
-                statCardDatas[randNum].StatCardImg
+                stat.name,
+                stat.StatExplanation,
+                stat.StatCardImg
             );
             statUiAll[count].SetActive(true);
         }
@@ -140,6 +140,7 @@ public class UIManager : MonoBehaviour
         stopPanel.SetActive(true);
         
         SettingStateCard();
+        Time.timeScale = 0;
 
     }
 
@@ -150,5 +151,21 @@ public class UIManager : MonoBehaviour
             statUiAll[count].SetActive(false);
         }
         stopPanel.SetActive(false);
+        Time.timeScale = 1;
     }
+
+    public void GKeyActive(bool active, GameObject gameObj)
+    {
+        GKeyUi.SetActive(active);
+
+        if(Input.GetKeyDown(KeyCode.G) && active)
+        {
+            gameObj.SetActive(false);
+            GKeyUi.SetActive(false );
+        }
+
+    }
+
+    
+
 }
