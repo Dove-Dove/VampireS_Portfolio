@@ -20,7 +20,8 @@ public class PlayerStatus : MonoBehaviour
     [SerializeField] private float cooldownReduction = 0f;
     [SerializeField] private float pickupRange = 1f;
     [SerializeField] private float targetRange = 20f;
-
+    private PlayerAnimatorController anim;
+    private InvincibilityHandler invincibilityHandler;
     // 이벤트 정의
     public event Action OnDeath;
 
@@ -40,6 +41,8 @@ public class PlayerStatus : MonoBehaviour
     private void Awake()
     {
         currentHealth = maxHealth;
+        invincibilityHandler = GetComponent<InvincibilityHandler>();
+        anim = GetComponent<PlayerAnimatorController>();
     }
 
     #region 스탯 조작 메서드
@@ -56,15 +59,32 @@ public class PlayerStatus : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
+        if (invincibilityHandler != null && invincibilityHandler.IsInvincible) return;
+
         float finalDamage = Mathf.Max(amount - defense, 1f);
         currentHealth -= finalDamage;
 
         if (currentHealth <= 0f)
         {
             currentHealth = 0f;
-            OnDeath?.Invoke(); // 외부 구독자에게 알림
+            anim?.TriggerDeath(); 
+            OnDeath?.Invoke();
+        }
+        else
+        {
+            anim?.TriggerHurt();
+            invincibilityHandler?.TriggerInvincibility();
         }
     }
+    public void Revive()
+    {
+        currentHealth = maxHealth;
 
+        
+        if (TryGetComponent(out PlayerAnimatorController anim))
+            anim.ResetToIdle(); // 선택 사항: Idle 상태로 되돌리기
+
+        Debug.Log("PlayerStatus: 체력 완전 회복");
+    }
     #endregion
 }
