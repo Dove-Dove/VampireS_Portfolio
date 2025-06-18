@@ -22,9 +22,11 @@ public class UIManager : MonoBehaviour
     public GameObject pauseMenu;
 
     public GameObject GKeyUi;
+    public GameObject itemDescription;
     bool stop =false;
 
     public int DataCount = 0;
+
 
     private float gamePlayTime = 0;
 
@@ -63,37 +65,6 @@ public class UIManager : MonoBehaviour
 
     public void SettingStateCard()
     {
-
-        //for(int count= 0; count < statUiAll.Length; count++)
-        //{
-        //    int randNum = Random.Range(0, statCardDatas.Length);
-
-        //    for(int tm = 0; tm < temporarySave.Length; tm++)
-        //    {
-        //        if (temporarySave[tm] == randNum)
-        //        {
-        //            saveCard = false ;
-        //            count--;
-        //            break;
-        //        }
-
-        //        if(tm == temporarySave.Length-1)
-        //        {
-        //            saveCard = true ;
-        //            temporarySave[tm] = randNum;
-        //        }
-        //    }
-
-        //    if (true)
-        //    {
-        //        statUiAll[count].GetComponent<StatCardUI>().SetingStatUi
-        //            (statCardDatas[randNum].name , statCardDatas[randNum].StatExplanation 
-        //            , statCardDatas[randNum].StatCardImg);
-
-        //        saveCard = false ;
-        //    }
-            
-        //}
 
         List<int> usedIndices = new List<int>();
 
@@ -154,18 +125,18 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    public void GKeyActive(bool active, GameObject gameObj)
+    public void GKeyActive(bool active, GameObject gameObj , ItemData itemData)
     {
         GKeyUi.SetActive(active);
-
-        if(Input.GetKeyDown(KeyCode.G) && active)
+        itemDescription.SetActive(active);
+        itemDescription.GetComponent<ItemDescription>().SettingDescription(itemData);
+        if (Input.GetKeyDown(KeyCode.G) && active)
         {
             gameObj.SetActive(false);
-            GKeyUi.SetActive(false );
+            GKeyUi.SetActive(false);
+            itemDescription.SetActive(false);
         }
 
     }
-
-    
 
 }

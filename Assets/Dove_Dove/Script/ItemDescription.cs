@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ItemDescription : MonoBehaviour
 {
     // Start is called before the first frame update
     public TextMeshProUGUI ItemName;
 
-    public Sprite ItemImg;
+    public Image ItemImg;
 
     public TextMeshProUGUI ItemPrice;
 
@@ -24,6 +25,15 @@ public class ItemDescription : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void SettingDescription(ItemData itemData)
+    {
+        ItemName.text = itemData.name;
+        ItemImg.sprite = itemData.ItemImg;
+        ItemPrice.text = itemData.ItemPrice.ToString();
+        ItemText.text = itemData.ItemText;
+
     }
 
 }

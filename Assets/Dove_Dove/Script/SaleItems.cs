@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static ItemData;
 
 public class SaleItems : MonoBehaviour
 {
@@ -38,7 +39,7 @@ public class SaleItems : MonoBehaviour
             }
         }
 
-        ui.GetComponent<UIManager>().GKeyActive(playerDetected, this.gameObject);
+        ui.GetComponent<UIManager>().GKeyActive(playerDetected, this.gameObject, itemData);
     }
 
     // 디버그용: 감지 범위 시각화
@@ -50,8 +51,8 @@ public class SaleItems : MonoBehaviour
 
     public void GetItemData()
     {
-        
-        GetComponent<SpriteRenderer>().sprite = GameManager.Instance.RanItemData().ItemImg;
+        itemData = GameManager.Instance.RanItemData();
+        GetComponent<SpriteRenderer>().sprite = itemData.ItemImg;
 
     }
 }
