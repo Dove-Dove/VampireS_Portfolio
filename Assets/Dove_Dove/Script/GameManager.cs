@@ -89,12 +89,11 @@ public class GameManager : MonoBehaviour
 
     public void GameStop()
     {
-        Time.timeScale = 0;
         ui.GetComponent<UIManager>().escStopGame(true);
     }
     public void GameReStart()
     {
-        Time.timeScale = 1;
+
         ui.GetComponent<UIManager>().escStopGame(false);
     }
 

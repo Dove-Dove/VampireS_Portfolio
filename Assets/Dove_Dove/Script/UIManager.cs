@@ -23,7 +23,6 @@ public class UIManager : MonoBehaviour
 
     public GameObject GKeyUi;
     public GameObject itemDescription;
-    bool stop =false;
 
     public int DataCount = 0;
 
@@ -96,13 +95,14 @@ public class UIManager : MonoBehaviour
 
         if (stop)
         {
-            stopPanel.SetActive(true);
-            pauseMenu.SetActive(true);
+            Time.timeScale = 0;
+            ActiveStopPanel(true);
+            pauseMenu.GetComponent<StopUi>().moveUi(true);
         }
         else
         {
-            pauseMenu.SetActive(false);
-            stopPanel.SetActive(false);
+            pauseMenu.GetComponent<StopUi>().moveUi(false);
+
         }
     }
 
@@ -137,6 +137,14 @@ public class UIManager : MonoBehaviour
             itemDescription.SetActive(false);
         }
 
+    }
+
+    public void ActiveStopPanel(bool stop)
+    {
+        stopPanel.SetActive(stop);
+        pauseMenu.SetActive(stop);
+        if(!stop)
+            Time.timeScale = 1;
     }
 
 }
