@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
+
+
 
 public class GameManager : MonoBehaviour
 {
@@ -31,8 +34,31 @@ public class GameManager : MonoBehaviour
     //데이터 등록
 
     public StatCardData[] statCardDatas;
-    public ItemData[] itemDete;
 
+    public ItemData[] itemData;
+
+
+    //스텟 카드 
+    [System.Serializable]
+    public class UserStateCard
+    {
+        public StatCardData stateData;
+        public int count;
+    }
+    //유저 아이템 가지고 있는지 확인 
+    [System.Serializable]
+    public class UserItem
+    {
+        public ItemData itemData;
+        public int count;
+    }
+    
+
+
+
+    public List<UserItem> userGetItemData = new List<UserItem>();
+
+    public List<UserStateCard> userStateData = new List<UserStateCard>();
 
 
     //플레이 타임
@@ -128,6 +154,7 @@ public class GameManager : MonoBehaviour
             ui = GameObject.Find("UI_Canvas");
         }
 
+
         {//다시 확인
             if (Player == null)
             {
@@ -168,8 +195,8 @@ public class GameManager : MonoBehaviour
     public ItemData RanItemData()
     {
         ItemData data;
-        int randomNum = Random.Range(0, itemDete.Length);
-        data = itemDete[randomNum];
+        int randomNum = Random.Range(0, itemData.Length);
+        data = itemData[randomNum];
 
         return data;
 
@@ -182,4 +209,63 @@ public class GameManager : MonoBehaviour
         return statCard;
 
     }
+
+
+
+
+
+    public void AddItem(ItemData getItem)
+    {
+        UserItem found = null;
+
+        //아이템이 있는지 확인 
+        foreach (UserItem item in userGetItemData)
+        {
+            if (item.itemData == getItem)
+            {
+                found = item;
+                break;
+            }
+        }
+
+        //var found = userGetItemData.Find(x => x.itemData == get);
+
+        if (found != null) 
+            found.count++;
+        else 
+            userGetItemData.Add(new UserItem { itemData = getItem, count = 1 });
+    }
+
+    public List<UserItem> SetUserItemData()
+    {
+        return userGetItemData;
+    }
+
+    public void AddState(StatCardData getState)
+    {
+        UserStateCard found = null;
+
+        //아이템이 있는지 확인 
+        foreach (UserStateCard state in userStateData)
+        {
+            if (state.stateData == getState)
+            {
+                found = state;
+                break;
+            }
+        }
+
+        //var found = userGetItemData.Find(x => x.itemData == get);
+
+        if (found != null)
+            found.count++;
+        else
+            userStateData.Add(new UserStateCard { stateData = getState, count = 1 });
+    }
+
+    public List<UserStateCard> SetUserStateData()
+    {
+        return userStateData;
+    }
+
 }

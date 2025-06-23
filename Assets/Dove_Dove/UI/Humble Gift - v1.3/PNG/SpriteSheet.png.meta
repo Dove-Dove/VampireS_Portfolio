@@ -1315,7 +1315,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpriteSheet_58
+      name: SlideBox
       rect:
         serializedVersion: 2
         x: 32
@@ -2342,6 +2342,7 @@ TextureImporter:
       MSButton: -1707919751
       PAUSEText: 1171133351
       SButton: 1347631131
+      SlideBox: -1571120512
       SpriteSheet_0: 1068022976
       SpriteSheet_1: 28518046
       SpriteSheet_10: 1686990385
@@ -2414,7 +2415,6 @@ TextureImporter:
       SpriteSheet_54: -1782738486
       SpriteSheet_56: 1493087850
       SpriteSheet_57: 398281386
-      SpriteSheet_58: -1571120512
       SpriteSheet_59: -565146312
       SpriteSheet_6: 1783422052
       SpriteSheet_60: 4084235

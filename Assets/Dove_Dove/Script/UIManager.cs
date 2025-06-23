@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
+using Unity.VisualScripting;
+using static GameManager;
 
 public class UIManager : MonoBehaviour
 {
@@ -23,6 +25,10 @@ public class UIManager : MonoBehaviour
 
     public GameObject GKeyUi;
     public GameObject itemDescription;
+
+    public GameObject userItemInven;
+
+    private List<UserItem> userItemData = new List<UserItem>();
 
     public int DataCount = 0;
 
@@ -79,12 +85,10 @@ public class UIManager : MonoBehaviour
             while (usedIndices.Contains(randNum));
 
             usedIndices.Add(randNum); // 중복 방지용 저장
-            StatCardData stat = GameManager.Instance.RanStatCardDate(randNum);
+            StatCardData stat = Instance.RanStatCardDate(randNum);
 
             statUiAll[count].GetComponent<StatCardUI>().SetingStatUi(
-                stat.name,
-                stat.StatExplanation,
-                stat.StatCardImg
+                stat
             );
             statUiAll[count].SetActive(true);
         }
@@ -98,6 +102,8 @@ public class UIManager : MonoBehaviour
             Time.timeScale = 0;
             ActiveStopPanel(true);
             pauseMenu.GetComponent<StopUi>().moveUi(true);
+            userItemData = GameManager.Instance.SetUserItemData();
+            userItemInven.GetComponent<UserStopStateUI>().SetItem(userItemData);
         }
         else
         {
@@ -108,7 +114,7 @@ public class UIManager : MonoBehaviour
 
     public void openStateCard()
     {
-        stopPanel.SetActive(true);
+        //stopPanel.SetActive(true);
         
         SettingStateCard();
         Time.timeScale = 0;
@@ -119,9 +125,10 @@ public class UIManager : MonoBehaviour
     {
         for (int count = 0; count < statUiAll.Length; count++)
         {
-            statUiAll[count].SetActive(false);
+            statUiAll[count].GetComponent<StatCardUI>().NotClick();
+
         }
-        stopPanel.SetActive(false);
+
         Time.timeScale = 1;
     }
 
@@ -131,10 +138,12 @@ public class UIManager : MonoBehaviour
         itemDescription.SetActive(active);
         itemDescription.GetComponent<ItemDescription>().SettingDescription(itemData);
         if (Input.GetKeyDown(KeyCode.G) && active)
-        {
+        {       
             gameObj.SetActive(false);
-            GKeyUi.SetActive(false);
+            GKeyUi.SetActive(false);        
             itemDescription.SetActive(false);
+            GameManager.Instance.AddItem(itemData);
+
         }
 
     }

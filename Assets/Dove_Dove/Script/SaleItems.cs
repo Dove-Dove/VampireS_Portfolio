@@ -38,7 +38,7 @@ public class SaleItems : MonoBehaviour
             }
         }
 
-        ui.GetComponent<UIManager>().GKeyActive(playerDetected, this.gameObject, itemData);
+        ui.GetComponent<UIManager>().GKeyActive(playerDetected, gameObject, itemData);
     }
 
     // 디버그용: 감지 범위 시각화

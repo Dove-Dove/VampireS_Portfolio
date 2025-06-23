@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statCardName: ajjjjjjjjjjjjjjjjjjjjjjjj
   statCardImg: {fileID: 21300000, guid: 28332292ef0940a4189976405e749db7, type: 3}
-  statExplanation: fgdhgfdhfdghdfghfdghdfghdfg
+  statExplanation: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   effects:
   - effectType: 1
     value: 100

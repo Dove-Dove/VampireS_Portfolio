@@ -28,9 +28,5 @@ public class DealerNpc : MonoBehaviour
             GameObject effect = Instantiate(spawnEffect, transform.position, Quaternion.identity);
             Destroy(effect, 2f);
         }
-        else
-        {
-            Debug.LogWarning("SpawnEffect 프리팹이 할당되지 않았습니다.");
-        }
     }
 }

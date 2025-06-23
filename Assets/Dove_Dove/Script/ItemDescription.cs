@@ -15,10 +15,14 @@ public class ItemDescription : MonoBehaviour
 
     public TextMeshProUGUI ItemText;
 
+    RectTransform rect;
+
+    Vector2 backPos = Vector2.zero;
 
     void Start()
     {
-        
+        rect = GetComponent<RectTransform>();
+        backPos = rect.position;
     }
 
     // Update is called once per frame
@@ -34,6 +38,15 @@ public class ItemDescription : MonoBehaviour
         ItemPrice.text = itemData.ItemPrice.ToString();
         ItemText.text = itemData.ItemText;
 
+    }
+    public void SetPos(Vector2 Pos)
+    {
+        rect.anchoredPosition = Pos;
+    }
+
+    public void BackPos()
+    {
+        rect.anchoredPosition = backPos;
     }
 
 }
